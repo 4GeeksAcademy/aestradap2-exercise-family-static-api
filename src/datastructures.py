@@ -25,15 +25,12 @@ initials_members = [{
 class FamilyStructure:
     def __init__(self, last_name):
         self.last_name = last_name
+        self._members = []
 
         # example list of members
         for member in initials_members:
-              if 'id' in member:
-                pass
-              else:
-                member['id'] = self._generateId()
-                
-        self._members = initials_members
+              self.add_member(member)
+      
         print(self._members)
         
 
@@ -43,22 +40,28 @@ class FamilyStructure:
 
     def add_member(self, member):
         # fill this method and update the return
-        member['id'] = self._generateId()
+        if 'id' not in member:
+          member['id'] = self._generateId()
+        
         self._members.append(member)
         return self._members
 
     def delete_member(self, id):
         # fill this method and update the return
-        don_dic = { "done": id }
-                   
-            
-        return don_dic
+        don_dic = { "done": False }
+       
+        for i in range(len(self._members)):
+            if self._members[i]['id'] == id:
+                del(self._members[i])
+                don_dic = {'done':True}
+                break
+        return don_dic 
 
     def get_member(self, id):
         # fill this method and update the return
         my_member = {}
         for member in self._members:
-            # if member.id == id:
+            # if member.id == id: nofunciona en diccionarios
             if member['id'] == id:
                 my_member = member
 
